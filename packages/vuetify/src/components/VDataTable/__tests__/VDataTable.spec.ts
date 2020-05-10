@@ -894,4 +894,28 @@ describe('VDataTable.ts', () => {
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.internalCurrentItems).toHaveLength(1)
   })
+
+  it('should hide group button when column is not groupable', async () => {
+    const wrapper = mountFunction({
+      propsData: {
+        showGroupBy: true,
+        items: testItems,
+        headers: [
+          {
+            text: 'Dessert (100g serving)',
+            align: 'left',
+            value: 'name',
+            groupable: false,
+          },
+          { text: 'Calories', value: 'calories' },
+          { text: 'Fat (g)', value: 'fat' },
+          { text: 'Carbs (g)', value: 'carbs' },
+          { text: 'Protein (g)', value: 'protein' },
+          { text: 'Iron (%)', value: 'iron' },
+        ],
+      },
+    })
+
+    expect(wrapper.html()).toMatchSnapshot()
+  })
 })
