@@ -151,6 +151,14 @@ export default baseMixins.extend<options>().extend({
       return `list-${this._uid}`
     },
     computedCounterValue (): number {
+      if (typeof this.counterValue === 'function') {
+        if (this.multiple) {
+          const counterValue = this.selectedItems[0] ? this.selectedItems.join() : ''
+          return this.counterValue(counterValue.toString())
+        } else {
+          return this.counterValue((this.getText(this.selectedItems[0]) || '').toString())
+        }
+      }
       return this.multiple
         ? this.selectedItems.length
         : (this.getText(this.selectedItems[0]) || '').toString().length
